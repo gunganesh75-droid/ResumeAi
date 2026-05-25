@@ -339,7 +339,7 @@ export const dbSaveOTP = async (email, name, otp) => {
     await OTPCode.findOneAndUpdate(
       { email },
       { name, otp, expiresAt },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: 'after' }
     );
   } catch (err) {
     console.error('MongoDB saveOTP error:', err);
