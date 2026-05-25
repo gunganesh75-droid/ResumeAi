@@ -811,20 +811,6 @@ Optimized version compiled successfully based on modern industry standards.`;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve frontend built assets in production
-if (process.env.NODE_ENV === 'production') {
-  const frontendDistPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(frontendDistPath));
-  
-  // Catch-all route to serve index.html for React Router fallback
-  app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api/')) {
-      return next();
-    }
-    res.sendFile(path.join(frontendDistPath, 'index.html'));
-  });
-}
-
 app.listen(PORT, () => {
   console.log(`🚀 ResumeAI Backend active on http://localhost:${PORT}`);
 });
