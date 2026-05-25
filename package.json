@@ -1,0 +1,20 @@
+{
+  "name": "resume-builder-monorepo",
+  "version": "1.0.0",
+  "description": "Unified manager for AI Resume Builder",
+  "private": true,
+  "scripts": {
+    "install:frontend": "npm install --prefix frontend",
+    "install:backend": "npm install --prefix backend",
+    "install-all": "npm install && npm run install:frontend && npm run install:backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run start --prefix backend",
+    "dev": "concurrently -n \"frontend,backend\" -c \"bgBlue,bgGreen\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build:frontend": "npm run build --prefix frontend",
+    "build": "npm run build:frontend",
+    "start": "node backend/server.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
