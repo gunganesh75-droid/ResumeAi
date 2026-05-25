@@ -63,14 +63,14 @@ const getInitials = (name) => {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
 
-// Configure SMTP Transporter
+// Configure SMTP Transporter (Resend SMTP settings by default)
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_PORT === '465',
+  host: process.env.SMTP_HOST || 'smtp.resend.com',
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: parseInt(process.env.SMTP_PORT || '465') === 465,
   family: 4,            // Force IPv4 on Windows — avoids ::1 ECONNREFUSED
   auth: {
-    user: process.env.SMTP_USER || '',
+    user: process.env.SMTP_USER || 'resend',
     pass: process.env.SMTP_PASS || ''
   },
   tls: { rejectUnauthorized: false }
@@ -78,12 +78,12 @@ const transporter = nodemailer.createTransport({
 
 // ================= PASSWORDLESS SMTP OTP ENDPOINTS =================
 
-// 1. Send OTP to Gmail
+// 1. Send OTP to Email
 app.post('/api/auth/send-otp', async (req, res) => {
   const { email, name, isLogin } = req.body;
 
   if (!email) {
-    return res.status(400).json({ error: 'Gmail address is required.' });
+    return res.status(400).json({ error: 'Email address is required.' });
   }
 
   try {
@@ -91,12 +91,12 @@ app.post('/api/auth/send-otp', async (req, res) => {
 
     // If logging in but account does not exist
     if (isLogin && !existingUser) {
-      return res.status(400).json({ error: 'This Gmail is not registered. Please sign up first!' });
+      return res.status(400).json({ error: 'This email is not registered. Please sign up first!' });
     }
 
     // If signing up but account already exists
     if (!isLogin && existingUser) {
-      return res.status(400).json({ error: 'This Gmail is already registered. Please sign in instead!' });
+      return res.status(400).json({ error: 'This email is already registered. Please sign in instead!' });
     }
 
     // Generate 6-digit OTP
@@ -107,7 +107,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
 
     // Prepare SMTP Email options
     const mailOptions = {
-      from: process.env.SMTP_FROM || `"ResumeAI Verification" <${process.env.SMTP_USER}>`,
+      from: process.env.SMTP_FROM || `"ResumeAI Verification" <onboarding@resend.dev>`,
       to: email,
       subject: `[ResumeAI] Your 6-Digit OTP Verification Code: ${otp}`,
       html: `
@@ -136,7 +136,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
       await transporter.sendMail(mailOptions);
       return res.json({ 
         success: true, 
-        message: 'A 6-digit OTP verification code has been sent to your Gmail!' 
+        message: 'A 6-digit OTP verification code has been sent to your email!' 
       });
     } else {
       // Fallback developer mode: print to terminal console
@@ -167,7 +167,7 @@ app.post('/api/auth/verify-otp', async (req, res) => {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
-    return res.status(400).json({ error: 'Gmail and 6-digit OTP are required.' });
+    return res.status(400).json({ error: 'Email and 6-digit OTP are required.' });
   }
 
   try {

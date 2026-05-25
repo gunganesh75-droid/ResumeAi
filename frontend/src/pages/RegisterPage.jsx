@@ -112,7 +112,7 @@ const RegisterPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Gmail Address</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                   <FiMail className="w-5 h-5" />
@@ -123,7 +123,7 @@ const RegisterPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="appearance-none block w-full pl-11 pr-3 py-3.5 border border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-colors shadow-inner"
-                  placeholder="john.doe@gmail.com"
+                  placeholder="john.doe@example.com"
                 />
               </div>
             </div>
@@ -203,7 +203,7 @@ const RegisterPage = () => {
                 <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
                   <FiMail className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Verify Your Gmail</h3>
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Verify Your Email</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-2.5">
                   Enter the 6-digit security code sent to <br/><span className="font-bold text-slate-700 dark:text-slate-300">{email}</span>
                 </p>

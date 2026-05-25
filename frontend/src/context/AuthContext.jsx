@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Sends the 6-Digit OTP to the user's Gmail via backend SMTP
+  // Sends the 6-Digit OTP to the user's email via backend SMTP
   const sendOtp = async (email, name, isLogin) => {
     setLoading(true);
     try {
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
           style: { border: '1px solid #6366f1', padding: '16px', color: '#4f46e5', fontWeight: 'bold' }
         });
       } else {
-        toast.success('A 6-digit verification code has been sent to your Gmail!');
+        toast.success('A 6-digit verification code has been sent to your email!');
       }
       
       return response.data;

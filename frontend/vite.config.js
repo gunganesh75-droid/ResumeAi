@@ -9,4 +9,8 @@ export default defineConfig({
     // Raise the warning threshold to avoid false-positive build warnings.
     chunkSizeWarningLimit: 1800,
   },
+  preview: {
+    host: '0.0.0.0',
+    allowedHosts: ['resumeai-2-jz2t.onrender.com'],
+  },
 })
